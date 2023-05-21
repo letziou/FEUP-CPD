@@ -59,7 +59,7 @@ public class GameServer {
               String existingUsername = parts[0];
               
               if (existingUsername.equals(username)) {
-                  userExists = true;//TODO nao deve ser break aqui >:(
+                  userExists = true;
                   break;
               }
           }
@@ -71,14 +71,14 @@ public class GameServer {
             writer.write(username + ":" + password + ":0");
             writer.close();
             
-            return true; // Authentication successful
+            return true;
         }
       } catch (IOException e) {
           e.printStackTrace();
           System.out.println("An error occurred during authentication.");
       }
       
-      return false; // Authentication failed
+      return false;
     }
   }
 
@@ -165,13 +165,11 @@ public class GameServer {
               
               if (existingUsername.equals(username)) {
                   if (existingPassword.equals(password)) {
-                      return true; // Authentication successful
+                      return true;
                   } else {
-                      return false; // Incorrect password
+                      return false; 
                   }
               }
-
-
           }
           
           reader.close();
@@ -180,7 +178,7 @@ public class GameServer {
           System.out.println("An error occurred during authentication.");
       }
       
-      return false; // Authentication failed
+      return false; 
     }
 }
 
@@ -227,9 +225,7 @@ public class GameServer {
               try {
                 List<ClientHandler> playersCopy = new ArrayList<>();
                 playersCopy = getPlayers(0);
-                //if(players.size()==6) System.out.println("6");
                   if(playersCopy.size()==3) {
-                    System.out.println("playercopy:::" + playersCopy);
                     startGame(playersCopy, 0);
                   }
               } catch (IOException e) {
@@ -244,7 +240,6 @@ public class GameServer {
                 List<ClientHandler> playersCopy = new ArrayList<>();
                 playersCopy = getPlayers(1);
                   if(playersCopy.size()==3) {
-                    System.out.println("playercopy:::" + playersCopy);
                     startGame(playersCopy, 1);
                   }
               } catch (IOException e) {
@@ -259,7 +254,6 @@ public class GameServer {
                 List<ClientHandler> playersCopy = new ArrayList<>();
                 playersCopy = getPlayers(2);
                   if(playersCopy.size()==3) {
-                    System.out.println("playercopy:::" + playersCopy);
                     startGame(playersCopy, 2);
                   }
               } catch (IOException e) {
@@ -274,7 +268,6 @@ public class GameServer {
                 List<ClientHandler> playersCopy = new ArrayList<>();
                 playersCopy = getPlayers(3);
                   if(playersCopy.size()==3) {
-                    System.out.println("playercopy:::" + playersCopy);
                     startGame(playersCopy, 3);
                   }
               } catch (IOException e) {
@@ -289,7 +282,6 @@ public class GameServer {
                 List<ClientHandler> playersCopy = new ArrayList<>();
                 playersCopy = getPlayers(4);
                   if(playersCopy.size()==3) {
-                    System.out.println("playercopy:::" + playersCopy);
                     startGame(playersCopy, 4);
                   }
               } catch (IOException e) {
@@ -397,10 +389,8 @@ public class GameServer {
             }         
             handlers.remove(client);        
         }
-        for(var ClientHandler : players){
-          System.out.println(ClientHandler.getUsername()+" "+ClientHandler.getInGame()+" "+ClientHandler.isAuthenticated());
-        }
-      } else {
+      } 
+      else {
         if(client.getRank() < 251){
           if (bronzeRank.size() < maxPlayers) {            
               if (bronzeRank.contains(client)) {
@@ -450,17 +440,12 @@ public class GameServer {
   }
 
   public void startGame(List<ClientHandler> playersInGame, Integer order) throws IOException {
-    try {
-      System.out.println("in game");
-        Game game = new Game(playersInGame);
-        buffer = game.start();
-        if(buffer.size() == playersInGame.size()) {
-            startGame(playersInGame, order);
-        }
+    Game game = new Game(playersInGame);
+    buffer = game.start();
+    if(buffer.size() == playersInGame.size()) {
+        startGame(playersInGame, order);
+    }
 
-    } finally {
-        System.out.println("unlock");
-    } 
     synchronized (this) {
       List<ClientHandler> bufferCopy = new ArrayList<>(buffer);
 
@@ -470,10 +455,8 @@ public class GameServer {
       removeMissingPlayers(missingPlayers, order);
 
       for (ClientHandler clientHandler : bufferCopy) {
-          if(players.contains(clientHandler)) System.out.println("contains");
           handlers.add(clientHandler);
           clientHandler.setInGame(false);
-          System.out.println("check: "+clientHandler.getInGame());
           addPerson(clientHandler);
       }
     }

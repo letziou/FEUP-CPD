@@ -7,6 +7,10 @@ import java.util.List;
 public class Game {
     private List<ClientHandler> players;
     private List<ClientHandler> buffer = new ArrayList<>();
+    private int maxN = 0; 
+    private int minN = 30;
+    private String winner = "";
+    private String loser = "";
 
     public Game(List<ClientHandler> players) {
         this.players = players;
@@ -19,7 +23,6 @@ public class Game {
         String usernames[] = new String[nPlayers];
 
         for (ClientHandler handler : players) {
-          System.out.println(handler.getUsername());
           handler.setResponse(false); 
           if (!handler.getResponse()) {  // Only wait for a response if the client hasn't already responded
               handler.sendMessage("Game starting with " + nPlayers + " players.");
@@ -42,11 +45,6 @@ public class Game {
               }
           }
         }
-
-        int maxN = 0; 
-        int minN = 30;
-        String winner = "";
-        String loser = "";
 
         for (int i = 0; i < nPlayers; i++) {
             if (numbers[i] > maxN) {
@@ -79,7 +77,6 @@ public class Game {
           if (response.equals("y") || response.equals("Y") || response.equals("yes") || response.equals("Yes")) {
             buffer.add(handler);
             handler.sendMessage("placeholder");
-            System.out.println("GAME");
           }
           else {
             if(handler.getRankString().equals("2")) handler.updateRank(handler);

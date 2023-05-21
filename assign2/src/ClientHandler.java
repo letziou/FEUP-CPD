@@ -73,7 +73,7 @@ public class ClientHandler implements Runnable {
 
             if(authenticated && inQueue) {
                 out.println("\033[31m Waiting for other players to enter");
-              break;  //TODO: kill thread after breaking maybe? idk
+              break;
             }
 
           } 
@@ -116,20 +116,6 @@ public class ClientHandler implements Runnable {
       return rank;
     }
 
-    public void setRank(Integer sum) {
-      rank += sum;
-      if(rank < 0) rank = 0;
-      if(rank > 1000) rank = 1000;
-    }
-  
-    public BufferedReader getIn() {
-      return in;
-    }
-
-    public void sendMessage(String message){
-      out.println(message);
-    }
-
     public int getPlayerIndex() {
       return gameServer.handlers.indexOf(this);
     }
@@ -138,20 +124,34 @@ public class ClientHandler implements Runnable {
       return this.responded;
     }
 
+    public BufferedReader getIn() {
+      return in;
+    }
+
+    public Boolean isAuthenticated() {
+      return authenticated;
+    }
+
+    public Boolean getInGame() {
+        return inGame;
+    }
+
+    public void setRank(Integer sum) {
+      rank += sum;
+      if(rank < 0) rank = 0;
+      if(rank > 1000) rank = 1000;
+    }
+
+    public void sendMessage(String message){
+      out.println(message);
+    }
+
     public void setResponse(Boolean state) {
       responded = state;
     }
 
     public void setInGame(Boolean inGame) {
       this.inGame = inGame;
-    }
-
-    public Boolean isAuthenticated() {
-      return authenticated;
-  }
-
-    public Boolean getInGame() {
-        return inGame;
     }
 
     public void updateRank(ClientHandler client){

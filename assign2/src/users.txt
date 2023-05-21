@@ -7,8 +7,6 @@ g:g:750
 h:h:800
 i:i:900
 j:j:1000
+a:a:0
 c:c:200
-wet:wet:0
-qwqw:qwqw:25
-a:a:25
-b:b:75
+b:b:125

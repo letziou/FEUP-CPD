@@ -77,11 +77,10 @@ public class GameClient {
          }
 
          nullCounter = 0;
-         System.out.println(start);      
+         System.out.println("\033[32m" + start);
          
          String response = in.readLine();
-         
-         System.out.println(response);
+         System.out.println("\033[37m" + response);
 
          Integer number = null;
          System.out.println("Trying to read number ");
@@ -103,14 +102,12 @@ public class GameClient {
          response = in.readLine();
 
          System.out.println(response);
-         
-         //edited
 
          while(true){
             String buffer;
             buffer = in.readLine();
 
-            if(buffer.startsWith("If you want to play")) {  // Message that asks if player wants to continue
+            if(buffer.startsWith("If you want to play")) { 
                System.out.println(buffer);
                break;
             }
